@@ -1,0 +1,187 @@
+<template>
+ <section >
+   <Header />
+   <main  class="main-content bg-lightgrey">
+
+     <div v-if="isLoading === true" style="height: 300px;" :class="isLoading ? 'spin':''"></div>
+
+     <div v-else data-aos="fade-up" data-aos-delay="10" data-aos-once="true" class="page-content my-account login sec-padding">
+       <div class="container">
+         <div class="row">
+           <div class="col-md-12">
+             <div class="my-acc-sec text-center">
+               <h2>Log in op je account</h2>
+               <div class="my-acc-form form-area contact-box box-shadow border-radius bg-white-gray text-left">
+                 <form @submit.prevent="login">
+                   <div class="form-group">
+                     <input type="email" name="email" v-model="form.email" class="form-control" placeholder="E-mail adres" required>
+                   </div>
+                   <div class="form-group">
+                     <input type="password" name="password" v-model="form.password" class="form-control" placeholder="Wachtwoord" required>
+                   </div>
+
+                   <div class="btn-group">
+                     <button type="submit" class="button btn-submit btn-full mt-10">Inloggen</button>
+                     <a href="http://localhost:3000/auth/google" target="_blank"
+                        class="button btn-submit btn-full"> <img src="@/assets/img/google-icon.svg" />
+                       Sign in with Google
+                     </a>
+
+                     <a href="http://localhost:3000/auth/facebook" target="_blank" class="button btn-submit btn-full mt-10"><img src="@/assets/img/facebook-icon.svg" />
+                       Sign in with Facebook
+                     </a>
+                   </div>
+                 </form>
+                 <div class="text-center mt-20">
+                   <a href="">Wachtwoord vergeten?</a>
+                 </div>
+               </div>
+               <div class="text-center mt-20">
+                 <nuxt-link to="/register" class="underline">Nieuw account aanmaken</nuxt-link>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </main>
+   <Footer />
+ </section>
+</template>
+
+<script>
+
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+import { useHead } from '@vueuse/head';
+import { reactive } from 'vue';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import{isAuth} from '../middlewares/auth'
+
+let apiUrl;
+export default {
+  setup(){
+    const config = useRuntimeConfig();
+    apiUrl = config.public.api;
+
+    let siteData = reactive({
+      title:'Login',
+      description: 'Login Form',
+      keywords:''
+    });
+
+    useHead({
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href:'/favicon.png' }
+      ],
+      title: () => siteData.title,
+      meta: [
+        { name: 'description', content: () => siteData.description },
+        { name: 'keywords', content: () => siteData.keywords },
+        {
+          property: "og:title",
+          content: () => siteData.title,
+        },
+        {
+          property: "og:description",
+          content: () => siteData.description,
+        },
+        {
+          property: "twitter:title",
+          content: () => siteData.title,
+        },
+        {
+          property: "twitter:description",
+          content: () => siteData.description,
+        },
+
+      ]
+    })
+  },
+  name: "login",
+  data() {
+    return {
+      form: {
+        email: '',
+        password: '',
+      },
+      isLoading : false,
+
+    }
+  },
+
+
+ created() {
+   if (typeof window !== 'undefined') {
+     if (isAuth()) {
+       this.$router.push('/');
+     }
+
+     if (this.$route.query.token) {
+       const { name, email, id } = jwtDecode(this.$route.query.token);
+       localStorage.setItem('token', this.$route.query.token);
+       localStorage.setItem('name', name);
+       localStorage.setItem('email', email);
+       localStorage.setItem('id', id);
+       const { $swal } = useNuxtApp()
+
+       $swal.fire({
+         toast: true,
+         position: 'top-end',
+         showConfirmButton: false,
+         timer: 3000,
+         icon: 'success',
+         text: 'Logged In successful',
+       })
+       window.location.href = '/';
+     }
+   }
+
+ },
+
+  mounted() {
+    AOS.init();
+  },
+
+  methods:{
+    login() {
+      this.isLoading = true;
+      axios.post(`${apiUrl}/user/sign-in`, this.form)
+          .then((response) => {
+            this.isLoading = false
+            const { name, id } = jwtDecode(response.data.access_token);
+            localStorage.setItem('token', response.data.access_token);
+            localStorage.setItem('name', name);
+            localStorage.setItem('id', id);
+            const { $swal } = useNuxtApp()
+            $swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              icon: 'success',
+              text: 'Logged In successful',
+            })
+            this.$router.push('nieuws');
+          })
+          .catch((error) => {
+            this.isLoading = false
+            const { $swal } = useNuxtApp()
+            $swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              icon: 'error',
+              text: error.response.data,
+            })
+          })
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
