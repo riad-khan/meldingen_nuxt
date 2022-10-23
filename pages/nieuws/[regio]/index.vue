@@ -17,7 +17,7 @@
                             <div class="main-content">
 
                               <div v-if="pending === true" style="height: 300px;" :class="pending ? 'spin':''"></div>
-                                <div class="card other-news box-shadow border-radius-8 d-flex" v-for="item in allNews"
+                                <div v-else class="card other-news box-shadow border-radius-8 d-flex" v-for="item in allNews"
                                     :key="item.id">
                                     <div class="news-thumb">
 <!--                                        <img class="img-thumb" :src="img + item.image" alt="">-->
