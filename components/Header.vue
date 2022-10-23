@@ -53,7 +53,7 @@
                   <router-link to="/dashboard"><span>Profile</span></router-link>
                 </li>
                 <li :class="currentRouteName === 'login' ? 'active':''">
-                  <router-link to="/login" ><span>Account</span></router-link>
+                  <nuxt-link to="/login" ><span>Account</span></nuxt-link>
                 </li>
                 <!--
                 <li><a href="#">

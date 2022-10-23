@@ -126,6 +126,10 @@ div#search_by_place_result {
     min-height: 273px;
 }
 
+.main-height{
+  min-height: 400px;
+}
+
 .mac-content .post-meta {
     text-align: center;
     border: 1px solid;
