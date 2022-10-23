@@ -8,6 +8,9 @@ export default defineNuxtConfig({
         '@/assets/css/style.css',
         '@/assets/css/responsive.css'
     ],
+    axios: {
+        baseURL: 'http://localhost:4000', // Used as fallback if no runtime config is provided
+    },
 
     runtimeConfig: {
         public: {

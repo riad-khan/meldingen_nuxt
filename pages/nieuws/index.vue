@@ -32,7 +32,7 @@
                       <ul class="inline-list">
                         <li><span class="icon-clock"></span> {{dateTime(item.created_at)}} in &nbsp;</li>
                         <li><a href="">{{item.state}}</a>,&nbsp; </li>
-                        <li>Nederland</li>
+                        <li>Riad</li>
                       </ul>
                     </div>
                     <div class="btn-group">
@@ -213,11 +213,14 @@ export default {
       recentMeldingen: [],
     }
   },
+  created () {
+    this.fetchNews();
+  },
   mounted() {
     this.getOtherNews();
     window.addEventListener('scroll', this.handleScroll);
     AOS.init();
-    this.fetchNews();
+    // this.fetchNews();
 
     axios.get(`${apiUrl}/news/recent/meldingen`)
       .then((response)=>{
