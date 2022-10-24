@@ -1,11 +1,5 @@
 <template>
     <div>
-
-        <Head>
-            <Title>112 Nieuws | Meldingen.nl</Title>
-            <Meta name="description" :content="title" />
-            <Style type="text/css" children="body { background-color: green; }" />
-        </Head>
         <Header />
         <main class="main-content bg-lightgrey">
             <location urlPath="meldingen" />
@@ -71,12 +65,24 @@
 <script setup>
 const config = useRuntimeConfig();
 const router = useRoute();
-
 let apiUrl = config.public.api;
 let backend = config.public.backend;
 /* const { data } = await useAsyncData('seo', () => $fetch(`${apiUrl}/seo-data/Nieuws`)) */
 
-const {data: allNews ,pending} =  await useLazyAsyncData('news', () => $fetch(`${apiUrl}/news/filter-news/${router.params.regio}`));
+// useHead({
+//   title: 'My App',
+//   meta: [
+//     { name: 'description', content: 'My amazing site.' }
+//   ],
+//   bodyAttrs: {
+//     class: 'test'
+//   },
+//   script: [ { children: 'console.log(\'Hello world\')' } ]
+// })
+
+
+
+const {data: allNews ,pending} =  await useAsyncData('news', () => $fetch(`${apiUrl}/news/filter-news/${router.params.regio}`));
 
 onMounted( () => {
   refreshNuxtData('news');

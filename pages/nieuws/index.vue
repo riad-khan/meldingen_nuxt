@@ -1,5 +1,7 @@
 <template>
   <div>
+  <Head>
+  </Head>
     <Header />
 
    <main class="main-content bg-lightgrey">
@@ -17,7 +19,7 @@
 
                 <!--            News card start    -->
 
-                <div v-if="newsLoading === true" style="height: 300px;" :class="newsLoading ? 'spin':''"></div>
+                <div v-if="pending === true" style="height: 300px;" :class="pending ? 'spin':''"></div>
 
 
                 <div data-aos="fade-up" data-aos-delay="10" data-aos-once="true"
@@ -32,7 +34,7 @@
                       <ul class="inline-list">
                         <li><span class="icon-clock"></span> {{dateTime(item.created_at)}} in &nbsp;</li>
                         <li><a href="">{{item.state}}</a>,&nbsp; </li>
-                        <li>Riad</li>
+                        <li>Nederland</li>
                       </ul>
                     </div>
                     <div class="btn-group">
@@ -116,6 +118,9 @@
                        
                       </ul>
                     </div>
+                    <span class="place-name"> {{item.straat}}</span> in <span class="place-title"
+                                                                              style="color: #669e97 !important;">{{ item.stad}} </span>, <span class="place-name">
+                {{item.provincie}}</span>
                     <div class="btn-group">
                       <a href="" :class="'button btn-more bg-red border-radius-8 '+item.dienst">{{item.dienst}}</a>
                       
@@ -159,17 +164,40 @@
 </template>
 
 <script setup>
-
-const test  = await useAsyncData('seo', () => $fetch('http://localhost:4000/api/seo-data/Nieuws'))
 const config = useRuntimeConfig();
     apiUrl = config.public.api;
     backend = config.public.backend;
-   
-    let siteData = reactive({
-      title: 'Meldingen.nl',
-      description: '',
-      keywords:''
-    });
+
+const {data: news ,pending} =  await useAsyncData('get_news', () => $fetch(`${apiUrl}/news/`));
+const {data: seo} = await useAsyncData('news_seo',()=>$fetch(`${apiUrl}/seo-data/Nieuws`));
+const {data : recentMeldingen} = await useAsyncData('recent_meldingen',()=>$fetch(`${apiUrl}/news/recent/meldingen`));
+
+useHead({
+  titleTemplate: `${seo.value.title}`,
+  script: [{ children: `${seo.value.structured_data}` }],
+    meta: [
+    { name: 'description', content: `${seo.value.seo_meta}` }
+  ],
+})
+onMounted( () => {
+  refreshNuxtData('get_news');
+  refreshNuxtData('news_seo');
+})
+
+// useHead({
+//   title: seo.title,
+//   meta: [
+//     { name: 'description', content: 'My amazing site.' }
+//   ],
+//   bodyAttrs: {
+//     class: 'test'
+//   },
+//   script: [ { children: 'console.log(\'Hello world\')' } ]
+// })
+
+
+
+
 </script>
 
 <script>
@@ -184,10 +212,6 @@ import addImage from 'assets/img/add-img.jpg'
 import Location from "../../components/Location";
 let apiUrl;
 let backend;
-let seo;
-
-
-
 export default {
  
   components: { Location },
@@ -195,7 +219,6 @@ export default {
   name: "index",
   data() {
     return {
-
       image: { backgroundImage: `url(${addImage})` },
      
       increment: 1,
@@ -203,43 +226,22 @@ export default {
       moreNews: [],
       backend: backend,
       img: addImage,
-      recentMeldingen: [],
+
       news: [],
       newsLoading: false,
       loadingMore: false,
-      increment: 1,
-      nextReq: null,
-      moreNews: [],
-      recentMeldingen: [],
+
     }
   },
-  created () {
-    this.fetchNews();
-  },
+
   mounted() {
     this.getOtherNews();
     window.addEventListener('scroll', this.handleScroll);
     AOS.init();
     // this.fetchNews();
-
-    axios.get(`${apiUrl}/news/recent/meldingen`)
-      .then((response)=>{
-       this.recentMeldingen = response.data
-      })
-      .catch(error =>{
-        console.log(error);
-      })
-
-   
-
   },
   methods: {
-   async fetchNews() {
-      this.newsLoading = true;
-       const response = await axios.get(`${apiUrl}/news`)
-        this.news = response.data;
-        this.newsLoading = false;
-    },
+
     dateTime(value) {
       return moment(value).format('hh:mm');
     },
@@ -274,7 +276,7 @@ export default {
         })
     },
     handleScroll() {
-      
+
       if ((Math.round(window.scrollY) + window.innerHeight) >= document.body.scrollHeight) {
 
 
@@ -291,5 +293,7 @@ export default {
 </script>
 
 <style scoped>
-
+img.news-icon{
+  width: 32px;
+}
 </style>
