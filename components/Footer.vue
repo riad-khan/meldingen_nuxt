@@ -6,15 +6,17 @@
         <div class="col-md-5">
           <div class="widget footer-widget-1">
             <div class="logo">
-              <h1><a href="index.php"><img src="@/assets/img/logo.svg" alt=""/></a></h1>
+              <h1><a href="index.php"><img alt="" src="@/assets/img/logo.svg"/></a></h1>
             </div>
-            <p>Ontwerp door TRMEDIA.AGENCY<br /> Alle rechten voorbehouden, 2021</p>
+            <p>Ontwerp door TRMEDIA.AGENCY<br/> Alle rechten voorbehouden, 2021</p>
             <div class="social-sec">
-              <a href="" class="button whats-app">Whatsapp</a>
+              <a class="button whats-app" href="">Whatsapp</a>
               <ul class="social dark-white">
                 <li><a href=""><span class="icon-Instagram"></span></a></li>
-                <li><a href=""><span class="icon-twitter"><span class="path1"></span><span class="path2"></span></span></a></li>
-                <li><a href=""><span class="icon-facebook"><span class="path1"></span><span class="path2"></span></span></a></li>
+                <li><a href=""><span class="icon-twitter"><span class="path1"></span><span class="path2"></span></span></a>
+                </li>
+                <li><a href=""><span class="icon-facebook"><span class="path1"></span><span class="path2"></span></span></a>
+                </li>
 
               </ul>
             </div>
@@ -24,12 +26,12 @@
           <div class="widget footer-widget-2">
             <h4>Sitemap</h4>
             <ul class="widget-menu">
-<!--              <li><a href="">Meldingen</a></li>-->
-<!--              <li><a href="">Nieuws</a></li>-->
-<!--              <li><router-link to="/blogs">Blogs</router-link></li>-->
-<!--              <li><router-link to="/partnerbijdrage">Partnerbijdragen</router-link></li>-->
-<!--              <li><router-link to="/statistics">Statistics</router-link></li>-->
-<!--              <li><a href="">Contact</a></li>-->
+              <!--              <li><a href="">Meldingen</a></li>-->
+              <!--              <li><a href="">Nieuws</a></li>-->
+              <!--              <li><router-link to="/blogs">Blogs</router-link></li>-->
+              <!--              <li><router-link to="/partnerbijdrage">Partnerbijdragen</router-link></li>-->
+              <!--              <li><router-link to="/statistics">Statistics</router-link></li>-->
+              <!--              <li><a href="">Contact</a></li>-->
             </ul>
           </div>
         </div>

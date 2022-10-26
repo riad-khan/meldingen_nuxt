@@ -5,14 +5,14 @@
       <div class="row d-flex align-items-center call-to-row box-shadow bg-white-gray">
         <div class="col-md-8 col-xs-7">
           <div class="location-search-form">
-            <input type="text" v-model="search" @input="(e)=>searchRegion(e)" name="placename"
-                   placeholder="Zoek op plaatsnaam" />
+            <input v-model="search" name="placename" placeholder="Zoek op plaatsnaam" type="text"
+                   @input="(e)=>searchRegion(e)"/>
           </div>
         </div>
         <div class="col-md-4 col-xs-5">
 
           <div class="call-to-link textright">
-            <button @click.prevent="findMyLocation" class="button text-locator">
+            <button class="button text-locator" @click.prevent="findMyLocation">
 
               <span :class="isLoading ? 'rolling-spin':'icon-search'"></span>
             </button>
@@ -21,12 +21,12 @@
       </div>
 
 
-
       <div class="row">
         <div class="col-md-12">
-          <div v-show="isOpen" class="searchbar-area box-shadow" id="search_by_place_result"
-               v-for="(item, i) in locations">
-            <router-link class="d-block" :to="`/${urlPath}/${item.regio_url}`">{{item.stad}} <span>{{item.provincie}}
+          <div v-for="(item, i) in locations" v-show="isOpen" id="search_by_place_result"
+               class="searchbar-area box-shadow">
+            <router-link :to="`/${urlPath}/${item.regio_url}`" class="d-block">{{ item.stad }}
+              <span>{{ item.provincie }}
               </span></router-link>
           </div>
         </div>
@@ -37,9 +37,16 @@
   <!--/ Location call to action section-->
 </template>
 
+
 <script>
 import axios from "axios";
+
+let apiUrl
 export default {
+  setup() {
+    const config = useRuntimeConfig();
+    apiUrl = config.public.api;
+  },
   name: "Location",
   props: ['urlPath'],
   data() {
@@ -75,7 +82,7 @@ export default {
     searchRegion(e) {
       this.isLoading = true;
 
-      axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/auto/search?search=${e.target.value}`)
+      axios.get(`${apiUrl}/meldingen/auto/search?search=${e.target.value}`)
           .then((res) => {
             this.meldinges = [];
             this.meldinges.push(res.data)

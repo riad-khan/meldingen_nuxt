@@ -4,10 +4,12 @@
     <div id="mobileSidenav" class="sidenav">
       <div class="sidenav-header">
         <div class="logo">
-          <h1><router-link to="/"><img src="@/assets/img/logo.svg" alt="" /></router-link></h1>
+          <h1>
+            <router-link to="/"><img alt="" src="@/assets/img/logo.svg"/></router-link>
+          </h1>
         </div>
         <div class="close-sec">
-          <a href="javascript:void(0)" class="closebtn" @click="closeNav"><img src="@/assets/img/icon-close.svg"></a>
+          <a class="closebtn" href="javascript:void(0)" @click="closeNav"><img src="@/assets/img/icon-close.svg"></a>
         </div>
       </div>
       <div class="menu-mobile">
@@ -39,21 +41,29 @@
         <div class="row d-flex align-items-center">
           <div class="col-md-4 col-xs-8">
             <div class="logo">
-              <h1><router-link to="/"><img src="@/assets/img/logo.svg" alt="" /></router-link></h1>
+              <h1>
+                <router-link to="/"><img alt="" src="@/assets/img/logo.svg"/></router-link>
+              </h1>
             </div>
           </div>
           <div class="col-md-8 col-xs-4 textright">
             <div class="menu">
               <button class="openNav box-shadow" @click="openNav"><img src="@/assets/img/icon-hamburger.svg"></button>
               <ul>
-                <li :class="currentRouteName === 'meldingen' ? 'active':''" ><router-link to="/">Meldingen</router-link></li>
-                <li :class="currentRouteName === 'nieuws' ? 'active':''"><nuxt-link to="/nieuws">Nieuws</nuxt-link></li>
-                <li :class="currentRouteName === 'contact' ? 'active':''"><router-link to="/contact">Contact</router-link></li>
+                <li :class="currentRouteName === 'meldingen' ? 'active':''">
+                  <router-link to="/">Meldingen</router-link>
+                </li>
+                <li :class="currentRouteName === 'nieuws' ? 'active':''">
+                  <nuxt-link to="/nieuws">Nieuws</nuxt-link>
+                </li>
+                <li :class="currentRouteName === 'contact' ? 'active':''">
+                  <router-link to="/contact">Contact</router-link>
+                </li>
                 <li :class="currentRouteName === 'account' ? 'active':''">
                   <router-link to="/dashboard"><span>Profile</span></router-link>
                 </li>
                 <li :class="currentRouteName === 'login' ? 'active':''">
-                  <nuxt-link to="/login" ><span>Account</span></nuxt-link>
+                  <nuxt-link to="/login"><span>Account</span></nuxt-link>
                 </li>
                 <!--
                 <li><a href="#">
@@ -84,11 +94,10 @@
 // import {isAuth} from "@/helpers/auth";
 
 
-
 export default {
   name: "Header",
-  data(){
-    return{
+  data() {
+    return {
       // isAuth: isAuth(),
     }
   },
@@ -98,7 +107,7 @@ export default {
       return this.$route.name;
     }
   },
-  methods:{
+  methods: {
     openNav() {
       document.getElementById("mobileSidenav").style.right = "0";
       var element = document.getElementById("body-class");
@@ -107,9 +116,9 @@ export default {
     closeNav() {
       document.getElementById("mobileSidenav").style.right = "-88%";
       var element = document.getElementById("body-class");
-      setTimeout(function() {
+      setTimeout(function () {
         element.classList.remove("sidenav-open");
-      },500);
+      }, 500);
     }
   }
 

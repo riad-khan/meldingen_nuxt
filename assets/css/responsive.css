@@ -19,8 +19,6 @@
     }
 
 
-
-
 }
 
 /*Responsive Rana*/
@@ -109,8 +107,7 @@
     }
 
     .input-date label {
-        padding: 19px 15px;
-        ;
+        padding: 19px 15px;;
     }
 
     .form-group.submit-area {
@@ -143,11 +140,6 @@
     }
 
 
-
-
-
-
-
 }
 
 /* Tablet desktop :768px. */
@@ -155,20 +147,25 @@
     h2, .entry-content h2 {
         font-size: 20px;
     }
+
     button.news-list-btn {
         font-size: 20px;
     }
+
     .sidebar h2.sec-heading {
         margin-top: -35px;
     }
+
     h3, .entry-content h3 {
         font-size: 16px;
         line-height: 1.4;
     }
+
     .sidebar .card-content h3 {
         font-size: 16px;
         margin-bottom: 10px;
     }
+
     .card .btn-group .button {
         font-size: 14px;
     }
@@ -365,15 +362,16 @@
         font-weight: 500;
         position: relative;
     }
-    .menu-mobile ul li a span{
+
+    .menu-mobile ul li a span {
         padding-bottom: 4px;
     }
 
-   .menu-mobile ul li a:hover span,
+    .menu-mobile ul li a:hover span,
     .menu-mobile ul li.active a span {
         border-bottom: 4px solid;
         border-color: var(--cyan-color);
-    }    
+    }
 
     .menu-mobile ul li .theme-swapper label.switch {
         top: auto;
@@ -583,7 +581,6 @@
     }
 
     /*End Details Page*/
-
     .col-md-12 .card-content h6 {
         font-size: 18px;
     }
@@ -596,9 +593,11 @@
     .card .btn-group .button {
         font-size: 12px;
     }
+
     .news-thumb {
         max-width: 93px;
     }
+
     button.news-list-btn {
         font-size: 20px;
     }
@@ -634,9 +633,7 @@
     }
 
 
-
     /* Shitch Mobile*/
-
     #mobileSidenav .theme-swapper .switch {
         position: relative;
         display: inline-block;
@@ -667,7 +664,7 @@
         color: var(--primary-color)
     }
 
-    #mobileSidenav .theme-swapper input:checked+.slider:before {
+    #mobileSidenav .theme-swapper input:checked + .slider:before {
         -webkit-transform: translateX(125px);
         -ms-transform: translateX(125px);
         transform: translateX(125px);
@@ -689,7 +686,7 @@
         z-index: 999;
     }
 
-    #mobileSidenav .theme-swapper input:checked+.slider {
+    #mobileSidenav .theme-swapper input:checked + .slider {
         background-color: #ffffff;
     }
 
@@ -720,10 +717,12 @@
     .card .meta ul.inline-list li {
         font-size: 12px;
     }
+
     .sidebar h2.sec-heading {
         margin-bottom: 1rem;
         margin-top: 0;
     }
+
     section.footer-sec.sec-padding {
         padding-bottom: 0px;
     }
@@ -731,4 +730,5 @@
     /*End Mobile*/
 }
 
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+}
