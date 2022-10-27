@@ -17,7 +17,7 @@
           <div class="news-list">
             <ul>
               <li :class="region === item.regio ? 'active' : ''">
-                <nuxt-link :to="`/${path}/${item.provincie_url}`">{{ item.regio }}</nuxt-link>
+                <nuxt-link :to="path == 'meldingen' ? `/${item.regio_url}`:`/${path}/${item.provincie_url}`">{{ item.regio }}</nuxt-link>
               </li>
 
 

@@ -247,7 +247,6 @@ onMounted(() => {
 const title = route.params.slug.replaceAll("-", " ");
 const state = route.params.state.replaceAll("-", " ");
 
-
 useHead({
   titleTemplate: `Meldingen News Details - ${state} - ${title}`,
   // script: [{ children: `${seo.value.structured_data}` }],

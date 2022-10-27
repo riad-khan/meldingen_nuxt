@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Head>
-    </Head>
     <Header/>
 
     <main class="main-content bg-lightgrey">
@@ -22,8 +20,7 @@
                 <div v-if="pending === true" :class="pending ? 'spin':''" style="height: 300px;"></div>
 
 
-                <div v-for="(item,i) in news" class="card other-news box-shadow border-radius-8 d-flex" data-aos="fade-up"
-                     data-aos-delay="10" data-aos-once="true">
+                <div v-for="(item,i) in news" class="card other-news box-shadow border-radius-8 d-flex">
                   <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb"></div>
                   <div class="card-content">
                     <h3 class="card-heading">
@@ -169,7 +166,7 @@ const config = useRuntimeConfig();
 apiUrl = config.public.api;
 backend = config.public.backend;
 
-const {data: news, pending} = await useAsyncData('get_news', () => $fetch(`${apiUrl}/news/`));
+const {data: news, pending} = await useLazyAsyncData('get_news', () => $fetch(`${apiUrl}/news/`));
 const {data: seo} = await useAsyncData('news_seo', () => $fetch(`${apiUrl}/seo-data/Nieuws`));
 const {data: recentMeldingen} = await useAsyncData('recent_meldingen', () => $fetch(`${apiUrl}/news/recent/meldingen`));
 
@@ -184,6 +181,7 @@ useHead({
 onMounted(() => {
   refreshNuxtData('get_news');
   refreshNuxtData('news_seo');
+  refreshNuxtData('recent_meldingen');
 })
 
 // useHead({
@@ -236,9 +234,10 @@ export default {
   },
 
   mounted() {
+    AOS.init();
     this.getOtherNews();
     window.addEventListener('scroll', this.handleScroll);
-    AOS.init();
+  
     // this.fetchNews();
   },
   methods: {

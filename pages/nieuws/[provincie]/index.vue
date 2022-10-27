@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Header/>
+    <Header />
     <main class="main-content bg-lightgrey">
 
 
-      <Location urlPath="nieuws"/>
-      <RegioList :region="region" path="nieuws"/>
+      <Location urlPath="nieuws" />
+      <RegioList :region="region" path="nieuws" />
 
       <!-- News Section-->
       <section class="news-archive sec-padding pt-0">
@@ -16,17 +16,17 @@
 
                 <!--            News card start    -->
 
-                <div v-if="pending === true" :class="pending ? 'spin':''" style="height: 300px;"></div>
+                <div v-if="pending === true" :class="pending ? 'spin' : ''" style="height: 300px;"></div>
 
 
-                <div v-for="(item,i) in allNews" class="card other-news box-shadow border-radius-8 d-flex" data-aos="fade-up"
-                     data-aos-delay="10" data-aos-once="true">
+                <div v-for="(item, i) in allNews" class="card other-news box-shadow border-radius-8 d-flex"
+                  data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
                   <div class="news-thumb"><img :src="backend + item.image" alt="" class="img-thumb"></div>
                   <div class="card-content">
                     <h3 class="card-heading">
                       <nuxt-link
-                          :to="'/nieuws/'+item.state+'/'+item.city.replace(/\s+/g, '-').toLowerCase()+'/'+item.slug+'/'+item.id"
-                          class="">
+                        :to="'/nieuws/' + item.state + '/' + item.city.replace(/\s+/g, '-').toLowerCase() + '/' + item.slug + '/' + item.id"
+                        class="">
                         {{ item.title }}
                       </nuxt-link>
                     </h3>
@@ -41,9 +41,8 @@
                       </ul>
                     </div>
                     <div class="btn-group">
-                      <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
-                         :class="'button btn-more bg-blue border-radius-8 '+ tag"
-                         href="">{{ tag }}</a>
+                      <a v-for="(tag, i) in item.tags.split(',')" v-show="tag.length !== 0"
+                        :class="'button btn-more bg-blue border-radius-8 ' + tag" href="">{{ tag }}</a>
                     </div>
                   </div>
                 </div>
@@ -66,11 +65,11 @@
                 <h2 class="sec-heading mt-30 color-black">Ander Nieuws</h2>
 
                 <div v-for="(item, i) in moreNews" :key="i" class="card other-news box-shadow border-radius-8"
-                     data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
+                  data-aos="fade-up" data-aos-delay="10" data-aos-once="true">
 
                   <div class="card-content">
                     <h3 class="card-heading">
-                      <nuxt-link :to="'/nieuws/'+item.state+'/'+item.city+'/'+item.slug+'/'+item.id" class="">
+                      <nuxt-link :to="'/nieuws/' + item.state + '/' + item.city + '/' + item.slug + '/' + item.id" class="">
                         {{ item.title }}
                       </nuxt-link>
                     </h3>
@@ -82,14 +81,13 @@
                       </ul>
                     </div>
                     <div class="btn-group">
-                      <a v-for="(tag,i) in item.tags.split(',')" v-show="tag.length !==0 "
-                         :class="'button btn-more bg-blue border-radius-8 '+ tag"
-                         href="">{{ tag }}</a>
+                      <a v-for="(tag, i) in item.tags.split(',')" v-show="tag.length !== 0"
+                        :class="'button btn-more bg-blue border-radius-8 ' + tag" href="">{{ tag }}</a>
                     </div>
                   </div>
 
                 </div>
-                <div v-if="loadingMore === true" :class="loadingMore ? 'spin':''" style="height: 300px;"></div>
+                <div v-if="loadingMore === true" :class="loadingMore ? 'spin' : ''" style="height: 300px;"></div>
 
 
               </div>
@@ -102,15 +100,15 @@
 
                 <h2 id="widget_title" class="sec-heading weight-500">Eerdere P2000-meldingen</h2>
 
-                <div v-for="(item,i) in recentMeldingen">
+                <div v-for="(item, i) in recentMeldingen">
                   <div class="card other-news box-shadow border-radius-8">
                     <div class="card-content">
                       <h3>
 
-                        <img :src="`/_nuxt/assets/img/${item.dienst}.png`" class="news-icon"/>
+                        <img :src="`/_nuxt/assets/img/${item.dienst}.png`" class="news-icon" />
 
                         <nuxt-link
-                            :to="'/'+item.provincie+'/'+item.stad_url+'/'+item.straat_url+'/'+item.categorie_url+'/'+item.id">
+                          :to="'/' + item.provincie + '/' + item.stad_url + '/' + item.straat_url + '/' + item.categorie_url + '/' + item.id">
                           {{ item.categorie }}
                         </nuxt-link>
                       </h3>
@@ -121,11 +119,11 @@
                         </ul>
                       </div>
                       <span class="place-name"> {{ item.straat }}</span> in <span class="place-title"
-                                                                                  style="color: #669e97 !important;">{{ item.stad }} </span>,
+                        style="color: #669e97 !important;">{{ item.stad }} </span>,
                       <span class="place-name">
-                {{ item.provincie }}</span>
+                        {{ item.provincie }}</span>
                       <div class="btn-group">
-                        <a :class="'button btn-more bg-red border-radius-8 '+item.dienst" href="">{{ item.dienst }}</a>
+                        <a :class="'button btn-more bg-red border-radius-8 ' + item.dienst" href="">{{ item.dienst }}</a>
 
                       </div>
                     </div>
@@ -159,41 +157,41 @@
       </section>
       <!-- / Step Section-->
     </main>
-    <Footer/>
+    <Footer />
 
   </div>
 </template>
-
+  
 <script setup>
 
 const config = useRuntimeConfig();
 const router = useRoute();
 apiUrl = config.public.api;
 backend = config.public.backend;
-const {data} = await useAsyncData('seo', () => $fetch(`${apiUrl}/seo-data/Nieuws`))
+const { data } = await useAsyncData('seo', () => $fetch(`${apiUrl}/seo-data/Nieuws`))
 
 useHead({
   title: `${data.value.title}  ${router.params.regio}`,
   meta: [
-    {name: 'description', content: `${data.value.seo_meta}`},
-    {name: 'keywords', content: `${data.value.seo_keywords}`}
+    { name: 'description', content: `${data.value.seo_meta}` },
+    { name: 'keywords', content: `${data.value.seo_keywords}` }
   ],
 
-  script: [{children: `${data.value.structured_data}`}]
+  script: [{ children: `${data.value.structured_data}` }]
 })
 
 const {
   data: allNews,
   pending
-} = await useAsyncData('filter_news', () => $fetch(`${apiUrl}/news/filter-news/${router.params.regio}`));
-const {data: recentMeldingen} = await useAsyncData('recent_meldingen', () => $fetch(`${apiUrl}/news/recent/meldingen`));
+} = await useAsyncData('filter_news', () => $fetch(`${apiUrl}/news/filter-news/${router.params.provincie}`));
+const { data: recentMeldingen } = await useAsyncData('recent_meldingen', () => $fetch(`${apiUrl}/news/recent/meldingen`));
 
 onMounted(() => {
   refreshNuxtData('filter_news');
 })
 </script>
-
-
+  
+  
 <script>
 import moment from 'moment';
 import addImage from 'assets/img/add-img.jpg';
@@ -206,12 +204,12 @@ let backend;
 export default {
   created() {
     const route = useRoute();
-    this.region = route.params.regio
+    this.region = route.params.provincie
   },
   data() {
     return {
       region: '',
-      image: {backgroundImage: `url(${addImage})`},
+      image: { backgroundImage: `url(${addImage})` },
 
       increment: 1,
       nextReq: null,
@@ -222,9 +220,10 @@ export default {
   },
 
   mounted() {
+    AOS.init();
     this.getOtherNews();
     window.addEventListener('scroll', this.handleScroll);
-    AOS.init();
+
     // this.fetchNews();
   },
   methods: {
@@ -238,29 +237,29 @@ export default {
 
     getOtherNews() {
       axios.get(`${apiUrl}/news/other/news/`)
-          .then((response) => {
-            response.data.map((item, i) => {
-              this.increment = 2;
-              this.moreNews.push(item)
-            })
+        .then((response) => {
+          response.data.map((item, i) => {
+            this.increment = 2;
+            this.moreNews.push(item)
           })
-          .catch(error => {
-            console.log(error)
-          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     getMoreOtherNews(page) {
       this.loadingMore = true;
       axios.get(`${apiUrl}/news/getMoreOtherNews/` + page)
-          .then((response) => {
-            this.nexReq = false;
-            this.loadingMore = false;
-            response.data.map((item, i) => {
-              this.moreNews.push(item)
-            })
+        .then((response) => {
+          this.nexReq = false;
+          this.loadingMore = false;
+          response.data.map((item, i) => {
+            this.moreNews.push(item)
           })
-          .catch(error => {
-            console.log(error)
-          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     handleScroll() {
 

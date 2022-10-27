@@ -26,12 +26,12 @@
           <div class="widget footer-widget-2">
             <h4>Sitemap</h4>
             <ul class="widget-menu">
-              <!--              <li><a href="">Meldingen</a></li>-->
-              <!--              <li><a href="">Nieuws</a></li>-->
-              <!--              <li><router-link to="/blogs">Blogs</router-link></li>-->
-              <!--              <li><router-link to="/partnerbijdrage">Partnerbijdragen</router-link></li>-->
-              <!--              <li><router-link to="/statistics">Statistics</router-link></li>-->
-              <!--              <li><a href="">Contact</a></li>-->
+                        <li><nuxt-link to="/">Meldingen</nuxt-link></li>
+                          <li><nuxt-link to="/nieuws">Nieuws</nuxt-link></li>
+                         <li><nuxt-link to="/blogs">Blogs</nuxt-link></li>
+                          <li><nuxt-link to="/partnerbijdrage">Partnerbijdragen</nuxt-link></li>
+                           <li><nuxt-link to="/statistics">Statistics</nuxt-link></li>
+                        <li><a href="">Contact</a></li>
             </ul>
           </div>
         </div>

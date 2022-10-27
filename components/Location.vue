@@ -25,7 +25,7 @@
         <div class="col-md-12">
           <div v-for="(item, i) in locations" v-show="isOpen" id="search_by_place_result"
                class="searchbar-area box-shadow">
-            <router-link :to="`/${urlPath}/${item.regio_url}`" class="d-block">{{ item.stad }}
+            <router-link :to="urlPath == 'meldingen' ? `/${item.regio_url}`:`/${urlPath}/${item.provincie_url}`" class="d-block">{{ item.stad }}
               <span>{{ item.provincie }}
               </span></router-link>
           </div>

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <section>
     <Header/>
     <location urlPath="meldingen"/>
-    <RegioList :region="'Nederland'" path="meldingen"/>
+    <RegioList region="Nederland" path="meldingen"/>
 
     <div class="container">
       <div class="row">
@@ -31,7 +31,7 @@
 
                   <span class="place-name" style="bottom: 33px;">{{ DateTime(item.timestamp) }}</span>
 
-                  <span v-if="item.prio === 1"
+                  <span  v-if="item.prio === 1"
                         class="place-name"
                         style="background-color: #e05b59;color: white;bottom: 14px;font-size: 14px;padding: 3px 5px;border-radius:4px">{{ prio["1"] }}
                 </span>
@@ -56,19 +56,17 @@
               </div>
 
             </div>
-
-
-            <!--            <div v-if="i % 7 === 5" class="card card-img">-->
-            <!--              <div class="news-item box-shadow border-radius news-ad-sec min-height-100"-->
-            <!--                   style="background-image: url(&quot;/img/add-img.0139dd0c.jpg&quot;);">-->
-            <!--                <div class="news-content">-->
-            <!--                  <h2 class="new-ad-heading"> Dit is een placeholder voor reclame</h2>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            <!--            </div>-->
+            <div v-if="i % 7 === 5" class="card card-img">
+              <div class="news-item box-shadow border-radius news-ad-sec min-height-100"
+                  :style="image">
+                  <div class="news-content">
+                      <h2 class="new-ad-heading"> Dit is een placeholder voor reclame</h2>
+                  </div>
+              </div>
+          </div>
           </div>
 
-          <div v-if="loading === true" :class="loading ? 'spin':''" style="height: 300px;"></div>
+        
 
 
         </div>
@@ -79,7 +77,7 @@
     </div>
 
     <Footer/>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -88,11 +86,21 @@ apiUrl = config.public.api;
 backend = config.public.backend;
 
 const {data: melding, pending} = await useLazyAsyncData('get_meldingen', () => $fetch(`${apiUrl}/meldingen/scroll-more/0`));
+const {data: seo} = await useAsyncData('home_seo', () => $fetch(`${apiUrl}/seo-data/home`));
 
+useHead({
+  titleTemplate: ` ${seo.value.title}`,
+  script: [{children: `${seo.value.structured_data}`}],
+  meta: [
+    {name: 'description', content: `${seo.value.seo_meta}`},
+    {name: 'keywords', content: `${seo.value.seo_keywords}`}
+  ],
+})
 meldingenArray = melding.value;
 onMounted(() => {
   refreshNuxtData('get_meldingen');
   refreshNuxtData('home_seo');
+
 })
 
 </script>
@@ -102,6 +110,7 @@ import moment from "moment/moment";
 import axios from "axios";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import addImage from 'assets/img/add-img.jpg'
 
 let apiUrl;
 let backend;
@@ -110,6 +119,7 @@ export default {
   name: "index.vue",
   data() {
     return {
+      image: {backgroundImage: `url(${addImage})`},
       prio: {
         1: 'Spoed',
         2: 'Gepaste spoed',
@@ -118,8 +128,8 @@ export default {
       },
       nexReq: null,
       meldingens: [],
-      isLoading: false,
-      loading: false,
+     
+
       increment: 1,
     }
   },
@@ -127,12 +137,12 @@ export default {
     this.meldingens = meldingenArray;
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll)
     AOS.init();
+    window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
     DateTime(value) {
-      return moment.unix(value, "MM-DD-YYYY").locale('nl').fromNow()
+      return moment.unix(value, "MM-DD-YYYY").fromNow()
     },
     getMoreMeldingen(page) {
       this.loading = true;
@@ -140,7 +150,6 @@ export default {
       axios.get(`${apiUrl}/meldingen/scroll-more/` + page)
           .then((response) => {
             response.data.map((item, i) => {
-
               this.meldingens.push(item)
               this.loading = false;
 

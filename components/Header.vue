@@ -51,7 +51,7 @@
               <button class="openNav box-shadow" @click="openNav"><img src="@/assets/img/icon-hamburger.svg"></button>
               <ul>
                 <li :class="currentRouteName === 'meldingen' ? 'active':''">
-                  <router-link to="/">Meldingen</router-link>
+                  <nuxt-link to="/">Meldingen</nuxt-link>
                 </li>
                 <li :class="currentRouteName === 'nieuws' ? 'active':''">
                   <nuxt-link to="/nieuws">Nieuws</nuxt-link>
