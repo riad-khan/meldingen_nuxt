@@ -27,7 +27,7 @@
               <div class="card card-overlay other-news box-shadow border-radius">
                 <div class="card-thumb">
                   <img :src="backend + newsDetails.image" alt="nieuws image" class="desktop-only">
-                  <img alt="nieuws image" class="mobile-only" src="newsDetails.media">
+                  <img alt="nieuws image" class="mobile-only" :src="backend + newsDetails.image">
 
                 </div>
                 <div class="card-content card-img-overlay">
