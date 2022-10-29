@@ -133,13 +133,13 @@
                      <div id="provincie_buttons_area" class="slides chart-btn" style="left: -660px;">
 
 
-                       <button v-for="(item, i) in provincie" :key="i" :id="item.provincie"
+                       <button v-for="(item, i) in provincieCount" :key="i" :id="item.provincie"
                                @click="provincieSelect(item.provincie,i)"
                                :class="index === i ?'provienci button active':'provienci button'" :value="item.provincie"
                                style="margin-left: 2px;margin-top: 3px;">
 
-                        <span style="vertical-align: inherit;" >{{item.provincie}}
-                          <span style="margin-left: 2px;display:block;span-size: 18px;" :id="'provincie'+i">0</span>
+                        <span style="vertical-align: inherit;" class="provincie_name"  >{{item.provincie}}
+                          <span style="margin-left: 2px;display:block;span-size: 18px;" :id="'provincie'+i">{{item.total}}</span>
                         </span>
 
 
@@ -209,7 +209,7 @@ export default {
       provincie: [],
       provincieCount: [],
       isLoading: false,
-      defaultProvincie: 'Noord-Brabant',
+      defaultProvincie: 'Drenthe',
       index: 0,
       config1: {
         type: 'line',
@@ -529,9 +529,8 @@ export default {
   },
   mounted() {
 
+
      this.RegioChange('all');
-
-
 
   },
   methods: {
@@ -549,14 +548,13 @@ export default {
       const provincieValue = this.$refs.select_provincie.value;
 
       const btn = document.getElementsByClassName('provienci button active');
-
-
+      console.log(btn)
       this.fetchMeldingenChartData(defaultMeldingenTime, regio);
       this.fetchAmbulanceMeldingen(defaultAmbulanceTime, regio);
       this.fetchBrandweerMeldingen(defaultBrandweer, regio);
       this.fetchPolitieMeldingen(defaultPolitie, regio);
       this.fetchProvincie();
-      this.fetchProvincieMeldingen(24, this.defaultProvincie)
+      this.fetchProvincieMeldingen(provincieValue, this.defaultProvincie)
     },
 
     fetchProvincie() {
@@ -757,29 +755,8 @@ export default {
 
             this.provincieChartRender();
             this.$refs.provincie_canvas.classList.value = "";
-            for(let i =0; i < response.data.hoursData.length;i++){
-              // console.log(response.data.hoursData[i]["provincie"]);
 
-              // const check = Object.values(response.data.hoursData[i]).includes(btnValue)
-              let btnValue = document.getElementById(response.data.hoursData[i]["provincie"]).value;
-
-             // document.getElementById('provincie'+i).innerHTML = response.data.hoursData[i]["provincie"].includes(btnValue) ? response.data.hoursData[i]["total"]: 0
-
-              function seacrch(){
-               const res = response.data.hoursData.find(({provincie})=> provincie == btnValue)
-                document.getElementById('provincie'+i).innerHTML = res.total
-                console.log(res)
-
-              }
-
-              console.log(seacrch())
-
-
-
-            }
-
-
-
+            this.provincieCount = response.data.hoursData;
 
           })
 

@@ -46,8 +46,10 @@
 
                 <ul class="social desktop-only">
                   <li class="label">Delen:</li>
-                  <li><a href=""><span class="icon-facebook"><span class="path1"></span><span class="path2"></span></span></a></li>
-                  <li><a href=""><span class="icon-twitter"><span class="path1"></span><span class="path2"></span></span></a></li>
+
+
+                  <li><ShareNetwork network="facebook" :url="currentUrl" ><span class="icon-facebook"><span class="path1"></span><span class="path2"></span></span></ShareNetwork></li>
+                  <li><ShareNetwork network="twitter" :url="currentUrl" ><span class="icon-twitter"><span class="path1"></span><span class="path2"></span></span></ShareNetwork></li>
                   <li><a href=""><span class="icon-Instagram"></span></a></li>
                 </ul>
 
@@ -152,6 +154,16 @@ let backend;
 import moment from "moment";
 export default {
   name: "[id]",
+  data(){
+    return{
+      currentUrl: "",
+    }
+  },
+  created() {
+    if(typeof window !== "undefined"){
+      this.currentUrl = window.location.href;
+    }
+  },
   methods:{
     DateTime(value){
       return moment.unix(value,"MM-DD-YYYY");

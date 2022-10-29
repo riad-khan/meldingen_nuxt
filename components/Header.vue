@@ -50,7 +50,7 @@
             <div class="menu">
               <button class="openNav box-shadow" @click="openNav"><img src="@/assets/img/icon-hamburger.svg"></button>
               <ul>
-                <li :class="currentRouteName === 'meldingen' ? 'active':''">
+                <li :class="currentRouteName === '/' ? 'active':''">
                   <nuxt-link to="/">Meldingen</nuxt-link>
                 </li>
                 <li :class="currentRouteName === 'nieuws' ? 'active':''">
