@@ -159,7 +159,6 @@ div#search_by_place_result {
 }
 
 
-
 /*Meldingen Animation*/
 @keyframes fadeInUp {
     from {
@@ -459,7 +458,6 @@ button.openNav {
 }
 
 .news-overview-sec .row {
-    margin: 0px;
     padding: 20px 0px;
     margin-bottom: 20px;
 }

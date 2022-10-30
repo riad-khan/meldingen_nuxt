@@ -1,7 +1,7 @@
 <template>
-  <section class="news-overview-sec">
-    <div class="container">
-      <button id="news-btn" class="news-list-btn" @click="toggleRegio">Trending in <span
+  <section class="news_drop">
+
+      <button id="news-btn" class="news-list-btn" @click="toggleRegio">Meldingen in <span
           class="primary-color">{{ region }}</span> <img alt=""
                                                          src="@/assets/img/icon-angle-down.svg"/></button>
 
@@ -13,7 +13,7 @@
         </div>
 
 
-        <div v-for="(item, i) in regios" :key="i" class="col col-md-3">
+        <div v-for="(item, i) in regios" :key="i" class="col-md-3">
           <div class="news-list">
             <ul>
               <li :class="region === item.regio ? 'active' : ''">
@@ -27,7 +27,6 @@
 
 
       </div>
-    </div>
   </section>
 
 

@@ -6,11 +6,13 @@
 
 
       <Location urlPath="nieuws"/>
-      <RegioList path="nieuws" region="Nederland"/>
 
       <!-- News Section-->
       <section class="news-archive sec-padding pt-0">
         <div class="container">
+          <div class="news_lsit mt-20">
+            <RegioList path="nieuws" region="Nederland"/>
+          </div>
           <div class="row">
             <div class="col-md-8 col-xs-12 ">
               <div class="main-content main-height">
